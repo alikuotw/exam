@@ -20,6 +20,6 @@
 
     php artisan key:generate
 
-#### 5. Execute UniTest ####
+#### 5. Execute UnitTest ####
 
     php artisan test
