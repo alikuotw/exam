@@ -31,7 +31,7 @@ class CurrencyController extends Controller
             if ($value === 0.0) throw new \Exception('參數錯誤');
 
             $sourceExchangeRate = $data->currencies->$source ?? null;
-            $targetExchangeRate = $data->currencies->$target ?? null;
+            $targetExchangeRate = $sourceExchangeRate->$target ?? null;
 
             if (!$sourceExchangeRate || !$targetExchangeRate) throw new \Exception('幣別不存在');
         } catch (\Exception $e) {
@@ -41,8 +41,7 @@ class CurrencyController extends Controller
             ], 400);
         }
 
-        $exchangeRate = $data->currencies->$source;
-        $result = bcmul($value, $exchangeRate->$target, 10);
+        $result = bcmul($value, $targetExchangeRate, 10);
         $formattedResult = number_format($result, 2);
 
         return Response::json([
